@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Todo.View.AddTodoItem">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" VerticalOptions="Center">
+            <Entry Placeholder="Descrição da tarefa" 
+                   Text="{Binding TodoItem.Title}" 
+                   TextColor="{DynamicResource PrimaryColor}"
+                   Margin="5, 0, 5, 0"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+                <Button Text="Salvar" Command="{Binding SalvarCommand}" 
+                        BackgroundColor="{DynamicResource PrimaryColor}"
+                        CornerRadius="20"
+                        TextColor="White"
+                        WidthRequest="150"
+                        FontFamily="bold"
+                        FontAttributes="Bold"
+                        />
+                <Button Text="Cancelar" Command="{Binding CancelarCommand}" 
+                        BackgroundColor="{DynamicResource SecundaryColor}" 
+                        CornerRadius="20"
+                        TextColor="White"
+                        WidthRequest="150"
+                        FontAttributes="Bold"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

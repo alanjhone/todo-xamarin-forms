@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converter="clr-namespace:Todo.Helper"
+             x:Class="Todo.View.TodoListView"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:StatusItemConverter x:Key="statusItemConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+
+                <ListView x:Name="listItens"
+                        IsGroupingEnabled="True"
+                        GroupDisplayBinding="{Binding Key}"
+                        ItemSelected="OnItemSelected"                        
+                        >
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Key}"
+                                   TextColor="Black"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   Margin="5"
+                                   VerticalOptions="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+
+                <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="10,0,0,0">
+                                    <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Title}" 
+                                           VerticalOptions="CenterAndExpand"
+                                           FontSize="Medium"
+                                           TextColor="{DynamicResource PrimaryColor}"
+                                           />
+                                        <Button ImageSource="lixeira.png" BackgroundColor="Transparent"
+                                            WidthRequest="30" HorizontalOptions="EndAndExpand"
+                                            Command="{Binding Path=BindingContext.RemoverItemCommand, Source={x:Reference listItens}}"
+                                            CommandParameter="{Binding .}">
+                                        </Button>
+                                        <Button IsVisible="{Binding IsCompleted, Converter={StaticResource statusItemConverter}}" 
+                                            ImageSource="unchecked.png" BackgroundColor="Transparent" WidthRequest="30" 
+                                            HorizontalOptions="End" Margin="0,0,10,0"
+                                            Command="{Binding Path=BindingContext.CompletarItemCommand, Source={x:Reference listItens}}"
+                                            CommandParameter="{Binding .}">
+                                        </Button>
+                                        <Button IsVisible="{Binding IsCompleted}" ImageSource="checked.png" 
+                                            BackgroundColor="Transparent" HorizontalOptions="End" WidthRequest="30" 
+                                            Margin="0,0,10,0"
+                                            Command="{Binding Path=BindingContext.DesativarItemCommand, Source={x:Reference listItens}}"
+                                            CommandParameter="{Binding .}">
+                                        </Button>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Button Command="{Binding AddItem}" Text="Adicionar Tarefa"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="#AF3800"/>
+
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
